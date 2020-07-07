@@ -1,20 +1,25 @@
 import React, { Component } from 'react';
+import { NavigationContainer } from '@react-navigation/native';
 
-import Home from './src/screens/home'
-import Login from './src/screens/login'
-import SignUp from './src/screens/signUp'
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react'
+import getStore from './src/redux/store';
 
-export default class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
+import Stack from './src/screens/components/stack'
 
+class App extends Component {
   render() {
     return (
-      // <Home />
-      // <Login />
-      <SignUp />
+      <Provider store={getStore.store}>
+        <NavigationContainer>
+          <PersistGate persistor={getStore.persistor} >
+            <Stack />
+          </PersistGate>
+        </NavigationContainer>
+      </Provider>
     );
   }
 }
+
+
+export default App

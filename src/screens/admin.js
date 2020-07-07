@@ -1,6 +1,19 @@
-import React, { Component } from 'react';
-import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, Text } from 'native-base';
-export default class Home extends Component {
+import React from 'react';
+
+import {
+  Text
+} from 'react-native'
+
+import {
+  Container, Header, Body, Left, Right, Footer, FooterTab, Button, Icon, Title, Content
+} from 'native-base'
+
+class Admin extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
   render() {
     return (
       <Container>
@@ -31,3 +44,6 @@ export default class Home extends Component {
     );
   }
 }
+
+
+export default Admin;
