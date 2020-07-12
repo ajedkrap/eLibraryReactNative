@@ -3,12 +3,14 @@ import {
   Image, StyleSheet, View, SafeAreaView, ScrollView, FlatList, Dimensions
 } from 'react-native'
 import {
-  Container, Title, Content, Text, Icon
+  Container, Title, Content, Text, Icon, Fab, Button
 } from 'native-base';
+import moment from 'moment'
 
 
 import { connect } from 'react-redux'
 import { getBook } from '../redux/action/book'
+import { getUserLoan } from '../redux/action/loan'
 
 import Books from './components/books';
 import Header from './components/header';
@@ -17,9 +19,15 @@ const deviceWidth = Dimensions.get('screen').width
 const deviceHeight = Dimensions.get('screen').height
 
 class Home extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      active: false
+    }
+  }
 
   componentDidMount() {
-    const { userData } = this.props.auth
+    const { userData, isAdmin } = this.props.auth
     const { loans } = this.props.loan
     const { id, token } = userData
     const getLoan = loans.filter(loans => loans['id'] === id)
@@ -31,13 +39,24 @@ class Home extends Component {
       loans.push(newLoan)
     }
     this.props.getBook(token)
+    if (!isAdmin) {
+      this.props.getUserLoan(token, id)
+    }
   }
 
   render() {
 
-    console.log(this.props)
-    const { navigation } = this.props
-    const { isLoading: bookLoad, books } = this.props.book
+    const { navigation, book, loan, auth } = this.props
+    const { isLoading: bookLoad, books } = book
+    const { userData, isAdmin } = auth
+    const { id: userId } = userData
+    const { loanData, onLoan } = loan
+
+    if (!isAdmin) {
+      const getOnLoan = loanData.filter(loan => loan.user_id === userId && loan.status === 'On Loan')[0]
+      const { due_date: dueDate, loan_date: loanDate, status } = getOnLoan
+      const getReturn = loanData.filter(loan => loan.user_id === userId && loan.status === 'Returned')[0]
+    }
     return (
       <Container>
         {bookLoad &&
@@ -47,9 +66,19 @@ class Home extends Component {
             </Text>
           </View>
         }
+
         <Header goToSearch={() => navigation.navigate('search')} />
+
         <Content padder>
-          <SafeAreaView style={{ flex: 1 }} >
+          {!bookLoad && isAdmin &&
+            <View style={{ flex: 1 }}>
+              <Button style={{ justifyContent: 'center', backgroundColor: '#87ceeb', elevation: 3 }}>
+                <Icon name='book-medical' type='FontAwesome5' />
+                <Text>Add Book</Text>
+              </Button>
+            </View>
+          }
+          <SafeAreaView style={{ flex: 1, zIndex: 1 }} >
             <ScrollView>
               {/* <View>
                 <View style={{ alignItems: "flex-end", marginHorizontal: 5, justifyContent: 'space-between', flexDirection: 'row', marginTop: 20 }}>
@@ -61,19 +90,18 @@ class Home extends Component {
                   <Icon name='search' style={{ flex: 1 }} />
                 </View>
               </View> */}
-              <View style={{ marginTop: 10, borderBottomColor: 'grey', borderBottomWidth: 1 }}>
-                <View style={{ alignItems: "flex-end", marginHorizontal: 5, justifyContent: 'space-between', flexDirection: 'row', marginTop: 20, paddingBottom: 10 }}>
-                  <Text style={{ fontSize: 30, color: '#53b4b4', fontWeight: 'bold' }}>Our Collection</Text>
-                  <Text style={{ fontSize: 16, color: '#01bdbd' }}>View All</Text>
+              {!bookLoad && books.length === 0 &&
+                <View>
+                  <Text>Fetch Error</Text>
                 </View>
-                <View style={{ height: 210, marginTop: 20 }}>
-
-                  {!bookLoad && books.length === 0 &&
-                    <View>
-                      <Text>Fetch Error</Text>
-                    </View>
-                  }
-                  {!bookLoad && books.length !== 0 &&
+              }
+              {!bookLoad && books.length !== 0 &&
+                <View style={{ marginTop: 10, borderBottomColor: 'rgba(200,200,200,0.5)', borderBottomWidth: 1 }}>
+                  <View style={{ alignItems: "flex-end", marginHorizontal: 5, justifyContent: 'space-between', flexDirection: 'row', marginTop: 20, paddingBottom: 10 }}>
+                    <Text style={{ fontSize: 30, color: '#53b4b4', fontWeight: 'bold' }}>Our Collection</Text>
+                    <Text style={{ fontSize: 16, color: '#01bdbd' }}>View All</Text>
+                  </View>
+                  <View style={{ height: 210, marginTop: 10 }}>
                     <FlatList
                       horizontal={true}
                       showsHorizontalScrollIndicator={false}
@@ -83,21 +111,24 @@ class Home extends Component {
                         <Books getBook={book['item']} detail={() => navigation.navigate('Detail', book['item'])} />
                       }
                     />
-                  }
-                  {/* <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-                    {DATA.map(book => (
-                      
-                        <Books imageUri={book.image} />
-                      
-                    ))}
-                  </ScrollView> */}
+                  </View>
                 </View>
-              </View>
-
+              }
+              {onLoan && !isAdmin &&
+                <View style={{ paddingVertical: 10, borderBottomColor: 'rgba(200,200,200,0.5)', borderBottomWidth: 1 }}>
+                  <Text style={{ textAlign: 'right', fontSize: 30, color: '#53b4b4', fontWeight: 'bold' }}>You Are On Loan</Text>
+                  <View style={{ backgroundColor: 'rgb(230,230,230)', margin: 10, padding: 15, elevation: 2 }}>
+                    <Text style={{ marginVertical: 5 }}>Loan Date : {moment(loanDate).format('DD MMMM YYYY')}</Text>
+                    <Text style={{ marginVertical: 5 }}>Due Date : {moment(dueDate).format('DD MMMM YYYY')}</Text>
+                    <Text style={{ marginVertical: 5 }}>Status : {status}</Text>
+                  </View>
+                  <Text style={{ textAlign: 'right', fontStyle: 'italic' }}>Mind to Return On Time</Text>
+                </View>
+              }
             </ScrollView>
           </SafeAreaView>
         </Content>
-      </Container>
+      </Container >
     );
   }
 }
@@ -108,6 +139,6 @@ const mapStateToProps = (state) => ({
   loan: state.loan
 })
 
-const mapDispatchToProps = { getBook }
+const mapDispatchToProps = { getBook, getUserLoan }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home)

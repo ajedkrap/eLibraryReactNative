@@ -1,11 +1,11 @@
 import http from '../../helper/http'
-import qs from 'querystring'
+// import qs from 'querystring'
 import { REACT_APP_URL } from '../../../env'
 
 
-export const getUserLoan = (token, id, params = null) => {
-  const param = qs.stringify(params)
-  const url = `${REACT_APP_URL}loans/user/${id}?${param}`
+export const getUserLoan = (token, id = null) => {
+  const getId = id ? `user/${id}` : null
+  const url = `${REACT_APP_URL}loans/${getId}`
   return {
     type: 'GET_USER_LOAN',
     payload: http(token).get(url)
@@ -37,5 +37,26 @@ export const deleteAllBook = (id) => {
   return {
     type: 'DELETE_ALL_LOAN',
     payload: { id }
+  }
+}
+export const newLoan = (token, data) => {
+  const url = `${REACT_APP_URL}loans`
+  return {
+    type: 'LOAN',
+    payload: http(token).post(url, data),
+  }
+}
+export const returnLoan = (token, id) => {
+  const url = `${REACT_APP_URL}loans/${id}`
+  console.log(url)
+  return {
+    type: 'RETURN_LOAN',
+    payload: http(token).patch(url)
+  }
+}
+
+export const clearMessage = () => {
+  return {
+    type: 'CLEAR_MESSAGE'
   }
 }

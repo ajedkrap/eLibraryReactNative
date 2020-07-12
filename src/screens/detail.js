@@ -18,11 +18,19 @@ import { connect } from 'react-redux'
 import { addLoanedBook } from '../redux/action/loan'
 
 import Genre from './components/genre'
+import { Directions } from 'react-native-gesture-handler';
 
 // import Footer from '../screens/components/footer'
 // import Header from '../screens/components/header'
 
 class Detail extends Component {
+
+  constructor(props) {
+    super(props)
+    this.state = {
+      active: false
+    }
+  }
 
   addLoan = (book) => {
     const { auth, loan, navigation } = this.props
@@ -49,7 +57,7 @@ class Detail extends Component {
   }
 
   render() {
-    console.log(this.props)
+    const { isAdmin } = this.props.auth
     const book = this.props.route.params
     const { id, title, image, author, status, description, genre, release_date } = book
     const getImage = {
@@ -60,7 +68,7 @@ class Detail extends Component {
     return (
       <Container style={{ width: deviceWidth }}>
         {/* <Header /> */}
-        <View style={{ flex: 1, position: 'absolute' }}>
+        <View style={{ flex: 1, }}>
 
           <Fab
             position='topLeft'
@@ -69,6 +77,23 @@ class Detail extends Component {
           >
             <Icon name='angle-left' type='FontAwesome5' />
           </Fab>
+          {isAdmin &&
+            <Fab
+              active={this.state.active}
+              position='topRight'
+              direction='down'
+              style={{ zIndex: 1, backgroundColor: '#2ed1a2' }}
+              onPress={() => this.setState({ active: !this.state.active })}
+            >
+              <Icon name='cog' type='FontAwesome5' />
+              <Button style={{ backgroundColor: '#34A34F' }}>
+                <Icon name="logo-whatsapp" />
+              </Button>
+              <Button style={{ backgroundColor: '#3B5998' }}>
+                <Icon name="logo-facebook" />
+              </Button>
+            </Fab>
+          }
         </View>
         <SafeAreaView  >
           <ScrollView >
