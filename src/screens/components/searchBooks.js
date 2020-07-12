@@ -3,14 +3,14 @@ import React, { Component } from 'react';
 import { View, Image, TouchableOpacity } from 'react-native';
 import { REACT_APP_URL } from '../../../env'
 
-class Books extends Component {
+class SearchBooks extends Component {
 
   render() {
     const { image } = this.props.getBook
     const getImage = `${REACT_APP_URL}${image}`
     return (
       <TouchableOpacity onPress={this.props.detail}>
-        <View style={{ height: 190, width: 120, marginHorizontal: 5, zIndex: 2, elevation: 5, backgroundColor: 'black', margintTop: 5, marginBottom: 5 }}>
+        <View style={{ height: 170, width: 105, marginHorizontal: 5, zIndex: 2, elevation: 5, backgroundColor: 'grey', margintTop: 10, marginBottom: 10 }}>
           <Image source={{
             uri: getImage
           }} style={{ flex: 1, height: null, width: null, resizeMode: "cover", }} alt='images' />
@@ -20,4 +20,4 @@ class Books extends Component {
   }
 }
 
-export default Books;
+export default SearchBooks;

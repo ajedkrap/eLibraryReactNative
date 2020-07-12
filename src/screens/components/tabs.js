@@ -5,6 +5,7 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 
 import { connect } from 'react-redux'
 
+import Search from '../search'
 import Admin from '../admin'
 import Dashboard from '../dashboard'
 import Loans from '../loans'
@@ -26,11 +27,21 @@ class Tab extends Component {
           options={{
             title: 'Explore',
             tabBarIcon: ({ color, size }) => (
-              <Icon name="search" solid color={color} size={size} />
+              <Icon name="globe-asia" solid color={color} size={size} />
             ),
           }}
           component={Dashboard}
           name="home"
+        />
+        <BottomTab.Screen
+          options={{
+            title: 'Search',
+            tabBarIcon: ({ color, size }) => (
+              <Icon name="search" solid color={color} size={size} />
+            ),
+          }}
+          component={Search}
+          name="search"
         />
         {!isAdmin && <BottomTab.Screen
           options={{

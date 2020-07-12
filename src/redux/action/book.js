@@ -10,3 +10,15 @@ export const getBook = (token, params = null) => {
     payload: http(token).get(url)
   }
 }
+
+export const searchBook = (token, params = null, getGenre = null) => {
+  console.log(params)
+  const param = qs.stringify(params)
+  const genre = getGenre ? `/${getGenre}` : ''
+  const url = `${REACT_APP_URL}books${genre}${'?' + param}`
+  console.log(url)
+  return {
+    type: 'SEARCH_BOOK',
+    payload: http(token).get(url)
+  }
+}

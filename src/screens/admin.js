@@ -33,13 +33,6 @@ class Admin extends React.Component {
             This is Content Section
           </Text>
         </Content>
-        <Footer>
-          <FooterTab>
-            <Button full>
-              <Text>Footer</Text>
-            </Button>
-          </FooterTab>
-        </Footer>
       </Container>
     );
   }

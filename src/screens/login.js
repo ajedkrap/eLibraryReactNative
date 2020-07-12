@@ -7,15 +7,15 @@ import {
   Keyboard, TextInput, TouchableOpacity, Image, Text,
   Alert
 } from 'react-native'
-import asyncStorage from '@react-native-community/async-storage'
 
 // import LinearGradient from 'react-native-linear-gradient'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faSignInAlt, faEye, faUser, faLock, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
 
 import { connect } from 'react-redux'
-
 import { login, clearMessage } from '../redux/action/auth'
+
+import asyncStorage from '@react-native-community/async-storage'
 
 import logo from '../assets/e-Library2.png'
 import bg from '../assets/bg.png'
@@ -40,6 +40,9 @@ class Login extends Component {
     this.props.clearMessage()
     this.keyboardDidShowSub = Keyboard.addListener('keyboardDidShow', this.handleKeyboardDidShow);
     this.keyboardDidHideSub = Keyboard.addListener('keyboardDidHide', this.handleKeyboardDidHide);
+    // await asyncStorage.clear()
+    // const yo = await asyncStorage.getItem('persist:root')
+    // console.log(JSON.parse(yo))
   }
 
   componentWillUnmount() {
@@ -102,6 +105,7 @@ class Login extends Component {
 
   componentDidUpdate() {
     const { message, isError, userData } = this.props.auth
+    const { username } = userData
     if (message !== null) {
       if (isError) {
         Alert.alert(
@@ -112,7 +116,7 @@ class Login extends Component {
       else {
         Alert.alert(
           message,
-          'Welcome'
+          'Welcome, ' + username
         )
         console.log('wah masuk nih')
         // await asyncStorage.setItem('token', JSON.stringify(userData));

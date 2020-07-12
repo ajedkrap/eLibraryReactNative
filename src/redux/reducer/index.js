@@ -4,16 +4,21 @@ import AsyncStorage from '@react-native-community/async-storage';
 
 import auth from './auth'
 import book from './book'
+import loan from './loan'
+import genre from './genre'
 
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
-  whitelist: ['auth', 'book']
+  whitelist: [],
+  blacklist: ['book', 'genre'],
 }
 
 const rootReducer = combineReducers({
   auth,
-  book
+  loan,
+  book,
+  genre
 })
 
 export default persistReducer(persistConfig, rootReducer)

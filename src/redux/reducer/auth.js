@@ -46,11 +46,19 @@ const auth = (state = initialState, action) => {
       }
     }
     case 'LOG_IN_REJECTED': {
+      let message = state.message
+      const { message: netError } = action.payload
+      const { message: authError } = action.payload.response.data
+      if (authError) {
+        message = authError
+      } else if (netError) {
+        message = netError
+      }
       return {
         ...state,
         isLoading: false,
         isError: true,
-        message: action.payload.response.data.message
+        message
       }
     }
     case 'LOG_IN_FULFILLED': {
@@ -73,9 +81,7 @@ const auth = (state = initialState, action) => {
       }
     }
     default: {
-      return {
-        state
-      }
+      return state
     }
   }
 }

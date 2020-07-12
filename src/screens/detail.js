@@ -1,32 +1,62 @@
 import React, { Component } from 'react';
 import {
   View, Image, Dimensions, TouchableOpacity, Text,
-  SafeAreaView, ScrollView
+  SafeAreaView, ScrollView, Alert
 } from 'react-native'
 import {
-  Container, Content, Fab, Icon, Button, Badg
+  Container, Content, Fab, Icon, Button, Badge
 } from 'native-base'
+
+import { REACT_APP_URL } from '../../env'
 
 import Icon2 from 'react-native-vector-icons/FontAwesome5'
 
 const deviceWidth = Dimensions.get('window').width
 const deviceHeight = Dimensions.get('screen').height
 
+import { connect } from 'react-redux'
+import { addLoanedBook } from '../redux/action/loan'
+
 import Genre from './components/genre'
 
 // import Footer from '../screens/components/footer'
 // import Header from '../screens/components/header'
 
-export default class Detail extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
+class Detail extends Component {
+
+  addLoan = (book) => {
+    const { auth, loan, navigation } = this.props
+    const { isAdmin, userData } = auth
+    const { id: userId } = userData
+    const { onLoan } = loan
+    if (!onLoan) {
+      // const getLoan = loans.filter(loan => loan.id === userId)[0]
+      // const { loanedBook } = getLoan
+      // loanedBook.push(book)
+      // loans.map(loan => {
+      //   if (loan.id === userId) {
+      //     loan = getLoan
+      //   }
+      //   return loan
+      // })
+      // console.log(loans)
+      this.props.addLoanedBook(book, userId)
+      navigation.navigate('loans')
+    } else {
+      Alert.alert('You are in Loan')
+      navigation.navigate('loans')
+    }
   }
 
-
   render() {
-    const { book } = this.props.route.params
-    const { title, author, image, status } = book
+    console.log(this.props)
+    const book = this.props.route.params
+    const { id, title, image, author, status, description, genre, release_date } = book
+    const getImage = {
+      uri: REACT_APP_URL + image
+    }
+    const addBook = { id, title, image, author, status, description, genre, release_date }
+
     return (
       <Container style={{ width: deviceWidth }}>
         {/* <Header /> */}
@@ -47,12 +77,12 @@ export default class Detail extends Component {
               <View style={{ flex: 6, marginBottom: 60 }}>
                 <View style={{ flex: 3, backgroundColor: '#a3e2ff', elevation: 5, }}>
                   <View style={{ flex: 1, zIndex: 0, flexDirection: 'column', opacity: 0.6 }} >
-                    <Image style={{ flex: 1, height: null, width: null, resizeMode: "cover" }} blurRadius={0.50} source={image} alt='book-bg' />
+                    <Image style={{ flex: 1, height: null, width: null, resizeMode: "cover" }} blurRadius={0.50} source={getImage} alt='book-bg' />
                   </View>
                 </View>
                 <View style={{ flex: 2, flexDirection: 'row', justifyContent: 'center' }}>
                   <View style={{ height: 200, width: 140, zIndex: 2, position: 'absolute', backgroundColor: '#94d5db', elevation: 11, borderColor: 'white', borderWidth: 5, borderRadius: 12, marginTop: -50 }}>
-                    <Image style={{ flex: 1, height: null, width: null, resizeMode: 'cover', borderRadius: 8 }} blurRadius={0.50} source={image} alt='book-bg' />
+                    <Image style={{ flex: 1, height: null, width: null, resizeMode: 'cover', borderRadius: 8 }} blurRadius={0.50} source={getImage} alt='book-bg' />
                   </View>
                 </View>
               </View>
@@ -61,17 +91,19 @@ export default class Detail extends Component {
                 <View style={{}}>
                   <View>
                     <View style={{ alignItems: 'center', marginTop: 10 }}>
-                      <Text style={{ display: 'flex', flexWrap: 'wrap', fontSize: 28, fontWeight: 'bold' }}>
+                      <Text style={{ display: 'flex', flexWrap: 'wrap', textAlign: 'center', fontSize: 28, fontWeight: 'bold' }}>
                         {title}
                       </Text>
                     </View>
                     <View style={{ display: 'flex', flexWrap: 'wrap', paddingVertical: 5, flexDirection: 'row', justifyContent: 'center', }}>
+                      {/* {genre.map(genre )} */}
                       <Genre name='comedy' />
 
                     </View>
                     <Text style={{ textAlign: 'center' }}>By {author}</Text>
                     <View style={{ marginVertical: 20, marginHorizontal: 80, }} >
-                      <Button style={{ height: 50, borderRadius: 10, elevation: 2, backgroundColor: '#12e4c3', justifyContent: 'center' }}>
+                      <Button style={{ height: 50, borderRadius: 10, elevation: 2, backgroundColor: '#12e4c3', justifyContent: 'center' }}
+                        onPress={() => this.addLoan(addBook)}>
                         <Icon2 style={{ fontSize: 18, marginRight: 10 }} name='book-reader' color='white' />
                         <Text style={{ color: 'white', fontSize: 20 }}>Borrow</Text>
                       </Button>
@@ -85,9 +117,7 @@ export default class Detail extends Component {
                       </View>
                     </View>
                     <Text>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Placerat in egestas erat imperdiet sed euismod nisi porta lorem. Orci sagittis eu volutpat odio facilisis mauris sit amet massa. Sem nulla pharetra diam sit amet nisl suscipit adipiscing bibendum. Praesent semper feugiat nibh sed pulvinar proin gravida hendrerit. Non quam lacus suspendisse faucibus. Mauris pharetra et ultrices neque ornare aenean euismod. Cursus in hac habitasse platea dictumst. Lectus quam id leo in. Ridiculus mus mauris vitae ultricies leo. Enim praesent elementum facilisis leo. Quam vulputate dignissim suspendisse in est ante in. Id venenatis a condimentum vitae sapien.
-
-                      Laoreet id donec ultrices tincidunt arcu non sodales neque. Lorem ipsum dolor sit amet consectetur adipiscing elit ut aliquam. Id cursus metus aliquam eleifend mi. Sed odio morbi quis commodo odio aenean sed adipiscing. Proin sagittis nisl rhoncus mattis rhoncus urna neque. Vestibulum morbi blandit cursus risus. Mi proin sed libero enim sed faucibus turpis. Nunc id cursus metus aliquam eleifend mi. Morbi tempus iaculis urna id volutpat lacus laoreet. Sit amet luctus venenatis lectus magna. Nisi quis eleifend quam adipiscing vitae proin. Lectus nulla at volutpat diam ut venenatis tellus in metus. Aliquet bibendum enim facilisis gravida neque. Vitae suscipit tellus mauris a diam maecenas sed. Nec dui nunc mattis enim ut. At varius vel pharetra vel turpis. Orci porta non pulvinar neque laoreet suspendisse. Non pulvinar neque laoreet suspendisse interdum consectetur libero. Platea dictumst quisque sagittis purus sit.
+                      {description}
                     </Text>
                   </View>
 
@@ -107,4 +137,11 @@ export default class Detail extends Component {
   }
 }
 
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+  loan: state.loan
+})
 
+const mapDispatchToProps = { addLoanedBook }
+
+export default connect(mapStateToProps, mapDispatchToProps)(Detail)

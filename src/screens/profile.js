@@ -15,7 +15,7 @@ import { logout } from '../redux/action/auth'
 
 // import Footer from '../screens/components/footer'
 // import Header from '../screens/components/header'
-const deviceWidth = Dimensions.get('window').width
+const deviceWidth = Dimensions.get('screen').width
 const deviceHeight = Dimensions.get('screen').height
 
 class Loans extends Component {
@@ -29,7 +29,8 @@ class Loans extends Component {
   }
 
   render() {
-    const { username, email } = this.props.auth
+    const { userData } = this.props.auth
+    const { username, email } = userData
     return (
       <Container>
         <View style={{ flex: 3, justifyContent: 'center' }}>
