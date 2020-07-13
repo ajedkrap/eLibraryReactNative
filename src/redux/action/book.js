@@ -22,3 +22,21 @@ export const searchBook = (token, params = null, getGenre = null) => {
     payload: http(token).get(url)
   }
 }
+
+export const addBook = (token, data) => {
+  const url = `${REACT_APP_URL}books`
+  return {
+    type: 'ADD_BOOK',
+    payload: http(token).post(url, data, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    })
+  }
+}
+
+export const clearMessage = () => {
+  return {
+    type: 'CLEAR_MESSAGE'
+  }
+}

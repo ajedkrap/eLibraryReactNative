@@ -10,7 +10,7 @@ import genre from './genre'
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
-  whitelist: [],
+  whitelist: ['auth', 'loan'],
   blacklist: ['book', 'genre'],
 }
 

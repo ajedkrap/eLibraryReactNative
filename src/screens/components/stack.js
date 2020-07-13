@@ -5,6 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Login from '../login'
 import SignUp from '../signUp'
 import Detail from '../detail'
+import AddBook from '../addBook'
 
 import Tab from './tabs'
 
@@ -60,6 +61,11 @@ class Stacks extends Component {
             <Stack.Screen
               component={Detail}
               name='Detail'
+            />
+            <Stack.Screen
+
+              component={AddBook}
+              name='AddBook'
             />
           </>
         )}

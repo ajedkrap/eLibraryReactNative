@@ -3,11 +3,18 @@ const initialState = {
   isError: false,
   books: [],
   searchBooks: [],
-  searchPage: {}
+  searchPage: {},
+  message: null
 }
 
 const book = (state = initialState, action) => {
   switch (action.type) {
+    case 'CLEAR_MESSAGE': {
+      return {
+        ...state,
+        message: null
+      }
+    }
     case 'GET_BOOK_PENDING': {
       return {
         ...state,
@@ -60,6 +67,26 @@ const book = (state = initialState, action) => {
         isError: false,
         searchBooks,
         searchPage: options,
+      }
+    }
+    case 'ADD_BOOK_PENDING': {
+      return {
+        isLoading: true,
+        isError: false
+      }
+    }
+    case 'ADD_BOOK_REJECTED': {
+      return {
+        isLoading: false,
+        isError: true,
+        message: action.payload.response.data.message
+      }
+    }
+    case 'ADD_BOOK_FULFILLED': {
+      return {
+        isLoading: false,
+        isError: false,
+        message: action.payload.data.message
       }
     }
     default: {

@@ -72,7 +72,8 @@ class Home extends Component {
         <Content padder>
           {!bookLoad && isAdmin &&
             <View style={{ flex: 1 }}>
-              <Button style={{ justifyContent: 'center', backgroundColor: '#87ceeb', elevation: 3 }}>
+              <Button style={{ justifyContent: 'center', backgroundColor: '#87ceeb', elevation: 3 }}
+                onPress={() => navigation.navigate('AddBook')}>
                 <Icon name='book-medical' type='FontAwesome5' />
                 <Text>Add Book</Text>
               </Button>
