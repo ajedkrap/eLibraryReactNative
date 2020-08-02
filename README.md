@@ -1,12 +1,13 @@
 <h1 align="center" > 
 <img height="40" src="https://raw.githubusercontent.com/ajedkrap/library-react/master/logo.png" alt="logo">
 <p>with</p> 
-<img height="100" src="https://cdn4.iconfinder.com/data/icons/logos-3/600/React.js_logo-512.png" alt="react">
+<img height="80" src="https://res.cloudinary.com/practicaldev/image/fetch/s--LS4X9NFz--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://pagepro.co/blog/wp-content/uploads/2020/03/react-native-logo-884x1024.png" alt="react">
 </h1>
 
 
 ## Description
-[![](https://img.shields.io/badge/react--native-v0.62.2-blue)](https://github.com/facebook/react-native)
+[![](https://img.shields.io/badge/React--Native-v0.62.2-blue)](https://github.com/facebook/react-native)
+<div />
 e-Library is an online library platform with a android-based application as a medium. The basic purpose of this application is to provide a forum for readers to borrow books without going to the real library. Created with React Native for Front-End, and Express Js for Back-end
 
 <p align='justify'></p>
