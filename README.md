@@ -4,7 +4,6 @@
 <img height="60" src="https://www.asapdevelopers.com/wp-content/uploads/2017/11/react-native-banner-1024x300-e1510060053599-1.png" alt="react-native" />
 </h1>
 
-
 ## Description
 [![](https://img.shields.io/badge/React--Native-v0.62.2-blue)](https://github.com/facebook/react-native)
 <div />
