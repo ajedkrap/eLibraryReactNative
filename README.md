@@ -1,6 +1,6 @@
-<div style="display:"flex";flex-direction:"row";" > 
+<div style="display:"flex";flex-direction:"row"; align-items:"center"; justify-content:"center";" > 
 <img height="40" src="https://raw.githubusercontent.com/ajedkrap/library-react/master/logo.png" alt="logo" />
-with
+<h1>with</h1>
 <img height="100" src="https://www.asapdevelopers.com/wp-content/uploads/2017/11/react-native-banner-1024x300-e1510060053599-1.png" alt="react-native" />
 </div>
 
