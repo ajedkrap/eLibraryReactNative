@@ -1,4 +1,4 @@
-<div style:"display:flex" > 
+<div style="display:flex; flex-direction:row" > 
 <img height="40" src="https://raw.githubusercontent.com/ajedkrap/library-react/master/logo.png" alt="logo" />
 <p>with</p> 
 <img height="100" src="https://res.cloudinary.com/practicaldev/image/fetch/s--LS4X9NFz--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://pagepro.co/blog/wp-content/uploads/2020/03/react-native-logo-884x1024.png" alt="react-native" />
