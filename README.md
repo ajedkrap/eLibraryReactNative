@@ -6,7 +6,7 @@
 
 
 ## Description
-[![React Native](https://img.shields.io/badge/react-native-v0.62.2-blue)](https://github.com/facebook/react-native)
+[![](https://img.shields.io/badge/react--native-v0.62.2-blue)](https://github.com/facebook/react-native)
 e-Library is an online library platform with a android-based application as a medium. The basic purpose of this application is to provide a forum for readers to borrow books without going to the real library. Created with React Native for Front-End, and Express Js for Back-end
 
 <p align='justify'></p>
