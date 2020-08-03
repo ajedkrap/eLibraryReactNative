@@ -7,7 +7,7 @@
 ## Screenshot
 <br/>
 <p align="center">
-   <img height="640" src="https://raw.githubusercontent.com/ajedkrap/eLibraryReactNative/master/banner.png" alt="banner"/>
+   <img width="640" height="427" src="https://raw.githubusercontent.com/ajedkrap/eLibraryReactNative/master/banner.png" alt="banner"/>
 </p>  
 <br/>
 
