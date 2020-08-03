@@ -5,10 +5,10 @@
 </h1>
 
 ## Screenshot
+<br/>
 <p align="center">
    <img height="400" src="https://raw.githubusercontent.com/ajedkrap/eLibraryReactNative/master/banner.png" alt="banner"/>
 </p>  
-<br/>
 <br/>
 
 ## Description
